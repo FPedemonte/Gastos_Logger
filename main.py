@@ -78,7 +78,7 @@ def transcribe_audio(audio_file):
         return None
 
 def main():
-    st.title("Voice Note Recorder")
+    st.title("Gastos Logger :money_with_wings:")
     
     # Audio recorder
     audio_bytes = st.audio_input("Click to record", key="audio_recorder")
