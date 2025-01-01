@@ -19,7 +19,7 @@ def setup_google_sheets():
 
     # Add your credentials file path
     creds = ServiceAccountCredentials.from_json_keyfile_name(
-        'C:/Code/Gastos Logger/service_account_credentials.json', scope)
+        'C:/Code/Gastos_Logger/service_account_credentials.json', scope)
     
     # Authorize the client
     client = gspread.authorize(creds)
