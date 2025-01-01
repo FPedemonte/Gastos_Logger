@@ -8,18 +8,31 @@ from dotenv import load_dotenv
 import os
 from openai import OpenAI
 # Load environment variables
-load_dotenv()
+# load_dotenv()
 
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 def setup_google_sheets():
     # Define the scope
     scope = ['https://www.googleapis.com/auth/spreadsheets',
              'https://www.googleapis.com/auth/drive']
 
-    # Add your credentials file path
-    creds = ServiceAccountCredentials.from_json_keyfile_name(
-        'C:/Code/Gastos_Logger/service_account_credentials.json', scope)
+    # Use credentials from streamlit secrets
+    credentials = {
+        "type": st.secrets["connections"]["gsheets"]["type"],
+        "project_id": st.secrets["connections"]["gsheets"]["project_id"],
+        "private_key_id": st.secrets["connections"]["gsheets"]["private_key_id"],
+        "private_key": st.secrets["connections"]["gsheets"]["private_key"],
+        "client_email": st.secrets["connections"]["gsheets"]["client_email"],
+        "client_id": st.secrets["connections"]["gsheets"]["client_id"],
+        "auth_uri": st.secrets["connections"]["gsheets"]["auth_uri"],
+        "token_uri": st.secrets["connections"]["gsheets"]["token_uri"],
+        "auth_provider_x509_cert_url": st.secrets["connections"]["gsheets"]["auth_provider_x509_cert_url"],
+        "client_x509_cert_url": st.secrets["connections"]["gsheets"]["client_x509_cert_url"]
+    }
+    
+    # Create credentials object from dictionary
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(credentials, scope)
     
     # Authorize the client
     client = gspread.authorize(creds)
