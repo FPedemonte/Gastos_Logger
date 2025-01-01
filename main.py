@@ -7,6 +7,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 import os
 from openai import OpenAI
+import pytz
 # Load environment variables
 # load_dotenv()
 
@@ -96,7 +97,8 @@ def main():
                     st.write("Transcription:", transcription)
                     
                     # Prepare data for spreadsheet
-                    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    timezone = pytz.timezone('America/Buenos_Aires')
+                    current_time = datetime.now(timezone).strftime("%Y-%m-%d %H:%M:%S")
                     data_row = [current_time, transcription]
                     
                     # Save to spreadsheet
